@@ -1,15 +1,15 @@
-def sieve(x):
-    primes = dict()
-    for i in range(1,x+1,2):
-        primes[i] = True
+from functools import reduce
 
-    for i in primes:
-        factors = range(i,x+1,i)
-        for j in factors[1:]:
-            primes[j] = False
+# Super fast factor function modified to not find the number itself and 1,
+# and also to return True if ther eare no factors, meaning it's prime 
+def factors(n):    
+    try: 
+    	return set(reduce(list.__add__, 
+                ([i, n//i] for i in range(2, int(n**0.5) + 1) if n % i == 0)))
+    except TypeError:
+    	return True
+factorz = factors(600851475143)
 
-    return [i for i in primes if primes[i] == True]
-
-primes_below_max = sieve(1000)
-print(primes_below_max)
-# print(max(primes_below_max))
+# Print all the numbers and whether they're primes or not. Pick highest prime.
+for fac in factorz:
+	print(fac, factors(fac))
